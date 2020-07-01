@@ -1,30 +1,15 @@
-import regex
 import pandas as pd
-from pandasql import sqldf
-
-
-df = pd.read_csv('test.csv')
-
-def check_anime(anime_name):
-    for Anime in df.anime.unique():
-        if Anime == anime_name:
-            return True
-    return False
-
-
-#Adding data into database:
 def add_recs(anime_name, anime_list = []):
-    global df
-    if check_anime(anime_name) == False:
+    #opening file
+    df = pd.read_csv('test.csv')
+    if anime_name not in list(df.anime):
         for anime in anime_list:
-            df2 = {"anime":anime_name, "recs":anime}
-            frame = pd.DataFrame([df2])
-            df = df.append(frame, ignore_index= True)  
-        df.drop(df.filter(regex="Unname"),axis=1, inplace=True)
-        print (df)
-        print('record added')
-    else:
-        print('already exists')
+            if anime not in list(df.recs):
+                df = df.append({'anime':anime_name, 'recs':anime},ignore_index=True)
+        
+    df.to_csv('test.csv', sep=',',encoding='utf-8', index=False)
+
+
 
 #     return
 # class Recommend:
