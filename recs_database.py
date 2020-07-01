@@ -24,8 +24,8 @@ def add_recs(anime_name, anime_list = []):
         df_recs.drop(df_recs.filter(regex="Unname"),axis=1, inplace=True)
         df_anime.drop(df_anime.filter(regex="Unname"),axis=1, inplace=True)
 
-        df_recs.to_csv('test.csv')
-        df_anime.to_csv('watchedA.csv')
+        df_recs.to_csv('test.csv', sep=',',encoding='utf-8', index=False)
+        df_anime.to_csv('watchedA.csv', sep=',',encoding='utf-8', index=False)
         print('record added')
     else:
         print('already exists')
@@ -38,11 +38,10 @@ def update():
        if anime in list(df_recs.anime_recs):
            df_recs.drop(df_recs[df_recs.anime_recs == anime].index, inplace = True)
    df_recs.drop(df_recs.filter(regex="Unname"),axis=1, inplace=True)
-   df_recs.to_csv('test.csv')
-    
-    
+   df_recs.to_csv('test.csv', sep=',',encoding='utf-8', index=False)
+   df_anime.drop(df_anime.filter(regex="Unname"),axis=1, inplace=True)
+   df_anime.to_csv('watchedA.csv', sep=',',encoding='utf-8', index=False)
 
-update()
 
 
 #     return
