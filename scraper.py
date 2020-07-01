@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 
 def get_recs(url):
     
-    plain_html_text = requests.get(url_to_scrape)
+    plain_html_text = requests.get(url)
     soup = BeautifulSoup(plain_html_text.content, "html.parser")
     soup.prettify()
     content = soup.find_all('strong')

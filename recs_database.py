@@ -1,5 +1,4 @@
 import pandas as pd
-<<<<<<< HEAD
 
 
 # # df = pd.read_csv('test.csv')
@@ -33,19 +32,6 @@ def add_recs(anime_name, anime_list = []):
         print('record added')
     else:
         print('already exists')
-=======
-def add_recs(anime_name, anime_list = []):
-    #opening file
-    df = pd.read_csv('test.csv')
-    if anime_name not in list(df.anime):
-        for anime in anime_list:
-            if anime not in list(df.recs):
-                df = df.append({'anime':anime_name, 'recs':anime},ignore_index=True)
-        
-    df.to_csv('test.csv', sep=',',encoding='utf-8', index=False)
-
-
->>>>>>> af3129af3be9244819f302521c50bb9785916a0f
 
 # def remove_watched():
 #     watched_list = df.anime.unique()
