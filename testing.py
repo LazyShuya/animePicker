@@ -1,9 +1,9 @@
-from recs_database import add_recs, update
+from recs_database import add_recs, update, random_function
 import scraper
 from mainstuff import MyAnimeList as MAL
 
 page = MAL()
-anime_list = scraper.get_recs(page.Search('flying witch'))
+anime_list = scraper.get_recs(page.Search(random_function()))
 add_recs(page.redirect(), anime_list)
 update()
 #  be able to remove . from text

@@ -1,4 +1,7 @@
 import pandas as pd
+import random
+import regex
+import numpy as np
 
 
 # # df = pd.read_csv('test.csv')
@@ -43,6 +46,32 @@ def update():
    df_recs.to_csv('test.csv', sep=',',encoding='utf-8', index=False)
    df_anime.drop(df_anime.filter(regex="Unname"),axis=1, inplace=True)
    df_anime.to_csv('watchedA.csv', sep=',',encoding='utf-8', index=False)
+
+
+def picker(anim_list):
+    display = {
+        1: anim_list[0],
+        2: anim_list[1],
+        3: anim_list[2],
+        4: anim_list[3],
+        5: anim_list[4],
+        6: anim_list[5],
+        7: anim_list[6],
+        8: anim_list[7],
+        9: anim_list[8],
+        10: anim_list[9],
+    }
+    for i in range(1,11):
+        print(f'{i}) {display[i]}')
+    x = int(input("Pick your anime: "))
+    return display[x]
+
+def random_function():
+    df_recs = pd.read_csv('test.csv')
+    df = (df_recs.head(200))
+    anime_list = list(df.anime_recs)
+    anime_to_display = random.sample(anime_list, 10)
+    return picker(anime_to_display)
 
 
 
