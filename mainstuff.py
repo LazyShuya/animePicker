@@ -47,6 +47,7 @@ class MyAnimeList:
         self.driver.get(link2)
         sleep(5)
         return (self.anime_name)
+        
 
     
     
