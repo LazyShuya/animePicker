@@ -3,7 +3,7 @@ import scraper
 from mainstuff import MyAnimeList as MAL
 
 page = MAL()
-anime_list = scraper.get_recs(page.Search('full metal alchemist brotherhood'))
+anime_list = scraper.get_recs(page.Search('lucky star'))
 add_recs(page.redirect(), anime_list)
 
 #  be able to remove . from text

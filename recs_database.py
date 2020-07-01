@@ -2,28 +2,50 @@ import regex
 import pandas as pd
 
 
-df = pd.read_csv('test.csv')
+# # df = pd.read_csv('test.csv')
 
-def check_anime(anime_name):
-    for Anime in df.anime.unique():
-        if Anime == anime_name:
-            return True
-    return False
+# def check_anime(anime_name):
+#     for Anime in df.anime.unique():
+#         if Anime == anime_name:
+#             return True
+#     return False
 
 
 #Adding data into database:
 def add_recs(anime_name, anime_list = []):
-    global df
-    if check_anime(anime_name) == False:
+    df_recs = pd.read_csv('test.csv')
+    df_anime = pd.read_csv('watchedA.csv')
+    if anime_name not in list(df_anime.anime):
+        df_anime = df_anime.append({'anime':anime_name}, ignore_index= True)
         for anime in anime_list:
-            df2 = {"anime":anime_name, "recs":anime}
-            frame = pd.DataFrame([df2])
-            df = df.append(frame, ignore_index= True)  
-        df.drop(df.filter(regex="Unname"),axis=1, inplace=True)
-        df.to_csv('test.csv')
+            if anime not in list(df_recs.anime_recs):
+                df_recs = df_recs.append({'anime_recs':anime, 'counter' : 0},ignore_index=True)
+            else:
+                df_recs.loc[df_recs.anime_recs==anime, 'counter'] += 1
+        #     df2 = {"anime":anime_name, "recs":anime}
+        #     frame = pd.DataFrame([df2])
+        #     df = df.append(frame, ignore_index= True)  
+        df_recs.drop(df_recs.filter(regex="Unname"),axis=1, inplace=True)
+        df_anime.drop(df_anime.filter(regex="Unname"),axis=1, inplace=True)
+
+        df_recs.to_csv('test.csv')
+        df_anime.to_csv('watchedA.csv')
         print('record added')
     else:
         print('already exists')
+
+# def remove_watched():
+#     watched_list = df.anime.unique()
+    
+#     # for watched in watched_list:
+#     # #     for stuff in df.recs
+#     # print(df.recs.Length())
+
+# remove_watched()
+
+
+
+
 
 #     return
 # class Recommend:
