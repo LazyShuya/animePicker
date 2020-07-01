@@ -37,6 +37,8 @@ def update():
    for anime in list(df_anime.anime):
        if anime in list(df_recs.anime_recs):
            df_recs.drop(df_recs[df_recs.anime_recs == anime].index, inplace = True)
+   
+   df_recs = df_recs.sort_values(by= 'counter', ascending = False)        
    df_recs.drop(df_recs.filter(regex="Unname"),axis=1, inplace=True)
    df_recs.to_csv('test.csv', sep=',',encoding='utf-8', index=False)
    df_anime.drop(df_anime.filter(regex="Unname"),axis=1, inplace=True)
