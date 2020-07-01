@@ -1,17 +1,12 @@
 import requests
-from bs4 import BeautifulSoup as bs
-
-def get_webpage(url):
-    webpage = requests.get(url).text
-    soup = bs(webpage, 'html.parser')
-    return soup
-
+from bs4 import BeautifulSoup
 
 def get_recs(url):
-    record = []
-    soup = get_webpage(url)
-    content = soup.find_all(style="margin-bottom: 2px;")
-    for stuff in content:
-        record.append(stuff.find('strong').get_text())
+    
+    plain_html_text = requests.get(url_to_scrape)
+    soup = BeautifulSoup(plain_html_text.content, "html.parser")
+    soup.prettify()
+    content = soup.find_all('strong')
+    record = [i.string for i in content if not (i.string).isdigit() ]
     return record
-
+add_recs('Vinland_Saga', get_recs('https://myanimelist.net/anime/37521/Vinland_Saga/userrecs'))

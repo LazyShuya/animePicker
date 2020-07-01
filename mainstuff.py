@@ -15,7 +15,7 @@ def trans_text(r):
     return tem_tex
 class MyAnimeList:
     def __init__(self):
-        self.driver = webdriver.Chrome(chrome_options= chrome_Options)
+        self.driver = webdriver.Chrome(options= chrome_Options)
         self.anime_name = ''
         self.current_link = 'https://myanimelist.net/'
         self.anime_link = ""
@@ -47,6 +47,8 @@ class MyAnimeList:
         self.driver.get(link2)
         sleep(5)
         return (self.anime_name)
+list1 = MyAnimeList()
+print(list1.ret_text())
 
     
     
