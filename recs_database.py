@@ -1,6 +1,5 @@
 import regex
 import pandas as pd
-from pandasql import sqldf
 
 
 df = pd.read_csv('test.csv')
@@ -21,7 +20,7 @@ def add_recs(anime_name, anime_list = []):
             frame = pd.DataFrame([df2])
             df = df.append(frame, ignore_index= True)  
         df.drop(df.filter(regex="Unname"),axis=1, inplace=True)
-        print (df)
+        df.to_csv('test.csv')
         print('record added')
     else:
         print('already exists')

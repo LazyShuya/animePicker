@@ -10,8 +10,6 @@ def get_webpage(url):
 def get_recs(url):
     record = []
     soup = get_webpage(url)
-    content = soup.find_all(style="margin-bottom: 2px;")
-    for stuff in content:
-        record.append(stuff.find('strong').get_text())
+    content = soup.find_all("strong")
+    record = [i.string for i in content if not (i.string).isdigit()]
     return record
-
