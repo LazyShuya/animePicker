@@ -21,9 +21,6 @@ def add_recs(anime_name, anime_list = []):
                 df_recs = df_recs.append({'anime_recs':anime, 'counter' : 0},ignore_index=True)
             else:
                 df_recs.loc[df_recs.anime_recs==anime, 'counter'] += 1
-        #     df2 = {"anime":anime_name, "recs":anime}
-        #     frame = pd.DataFrame([df2])
-        #     df = df.append(frame, ignore_index= True)  
         df_recs.drop(df_recs.filter(regex="Unname"),axis=1, inplace=True)
         df_anime.drop(df_anime.filter(regex="Unname"),axis=1, inplace=True)
 
@@ -33,17 +30,19 @@ def add_recs(anime_name, anime_list = []):
     else:
         print('already exists')
 
-# def remove_watched():
-#     watched_list = df.anime.unique()
+
+def update():
+   df_recs = pd.read_csv('test.csv')
+   df_anime = pd.read_csv('watchedA.csv')
+   for anime in list(df_anime.anime):
+       if anime in list(df_recs.anime_recs):
+           df_recs.drop(df_recs[df_recs.anime_recs == anime].index, inplace = True)
+   df_recs.drop(df_recs.filter(regex="Unname"),axis=1, inplace=True)
+   df_recs.to_csv('test.csv')
     
-#     # for watched in watched_list:
-#     # #     for stuff in df.recs
-#     # print(df.recs.Length())
+    
 
-# remove_watched()
-
-
-
+update()
 
 
 #     return
