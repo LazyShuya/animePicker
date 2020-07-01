@@ -34,6 +34,8 @@ def add_recs(anime_name, anime_list = []):
         print('already exists')
 
 
+list_for_cache = []
+
 def update():
    df_recs = pd.read_csv('test.csv')
    df_anime = pd.read_csv('watchedA.csv')
@@ -60,18 +62,35 @@ def picker(anim_list):
         8: anim_list[7],
         9: anim_list[8],
         10: anim_list[9],
+        11: "Shuffle again",
     }
-    for i in range(1,11):
+    for i in range(1,12):
         print(f'{i}) {display[i]}')
-    x = int(input("Pick your anime: "))
-    return display[x]
+    x = int(input("enter your choice: "))
+    print("")
+    if x<=10 and x>=1 :
+        return display[x]
+    elif x==11:
+        return False
+    else:
+        print("pleas choose again!!!!")
+        picker(anim_list)
 
 def random_function():
     df_recs = pd.read_csv('test.csv')
     df = (df_recs.head(200))
-    anime_list = list(df.anime_recs)
-    anime_to_display = random.sample(anime_list, 10)
-    return picker(anime_to_display)
+    
+    while True:
+        for prev_choices in list_for_cache:
+            if prev_choices in list(df.anime_recs):
+                df = df.drop(df[df.anime_recs==prev])
+        anime_list = list(df.anime_recs)
+        anime_to_display = random.sample(anime_list, 10)
+        choice = picker(anime_to_display)
+        if choice is not False:
+            return choice
+        else:
+            list_for_cache.append(anime_to_display)
 
 
 
