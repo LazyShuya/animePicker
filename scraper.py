@@ -9,4 +9,4 @@ def get_recs(url):
     content = soup.find_all('strong')
     record = [i.string for i in content if not (i.string).isdigit() ]
     return record
-add_recs('Vinland_Saga', get_recs('https://myanimelist.net/anime/37521/Vinland_Saga/userrecs'))
+
