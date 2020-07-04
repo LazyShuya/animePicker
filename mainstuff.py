@@ -32,16 +32,17 @@ class MyAnimeList:
         
         self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[3]/div[2]/div[2]/div[1]/div/article[1]/div[1]/div[2]/a[1]')\
             .click()
-        Total_episodes = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[3]/div[2]/table/tbody/tr/td[1]/div/div[10]').text
-        episodes = int(''.join(filter(str.isdigit, Total_episodes)))
+        Total_episodes = self.driver.find_element_by_xpath("//div[contains(text(), 'Episodes:')]").text
+        episodes = (''.join(filter(str.isdigit, Total_episodes)))
         self.anime_link = self.driver.current_url
         print(self.anime_link)
         print(episodes)
-        return [self.ret_text(), episodes]
+        return [self.ret_text(), int(episodes)]
     
     def redirect(self):     
         main_text = self.anime_name
         link = 'https://www19.gogoanime.io/'
+        self.driver.switch_to_window(self.driver.window_handles[1])
         self.driver.get(link)
         sleep(2)
         self.driver.find_element_by_xpath('/html/body/div[2]/div/div/header/section/div[4]/div[1]/form/div[1]/input[1]')\
@@ -52,9 +53,9 @@ class MyAnimeList:
         to_edit = self.driver.current_url
         ep_link = to_edit.replace('/category/', '/')
         self.driver.get(ep_link + '-episode-1')
-        return (self.anime_name)
+        return [self.anime_name, ep_link + '-episode-', '1']
 
-        
-m= MyAnimeList()
-m.Search('saiki kusuo')
-m.redirect()
+
+    def continue_where_left(self, link_ref):
+        self.driver.switch_to_window(self.driver.window_handles[1])
+        self.driver.get(link_ref)
