@@ -14,11 +14,11 @@ import numpy as np
 
 
 #Adding data into database:
-def add_recs(anime_name, anime_list = []):
+def add_recs(anime_name, total_episodes, anime_list = []):
     df_recs = pd.read_csv('test.csv')
     df_anime = pd.read_csv('watchedA.csv')
     if anime_name not in list(df_anime.anime):
-        df_anime = df_anime.append({'anime':anime_name}, ignore_index= True)
+        df_anime = df_anime.append({'anime':anime_name, 'watched_eps':0, 'total_eps':total_episodes }, ignore_index= True)
         for anime in anime_list:
             if anime not in list(df_recs.anime_recs):
                 df_recs = df_recs.append({'anime_recs':anime, 'counter' : 0},ignore_index=True)

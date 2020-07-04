@@ -9,14 +9,10 @@ from selenium.webdriver.common.keys import Keys
 chrome_Options = Options()
 chrome_Options.add_argument('load-extension='+'4.14.0_0')
 
-def trans_text(r):
-    new_text = r.replace(' ','-')
-    tem_tex = new_text.replace('.','\n')
-    return tem_tex
 class MyAnimeList:
     def __init__(self):
         self.driver = webdriver.Chrome(chrome_options= chrome_Options)
-        self.anime_name = ''
+        self.anime_name = 'Yu☆Gi☆Oh! '
         self.current_link = 'https://myanimelist.net/'
         self.anime_link = ""
         self.driver.get("https://myanimelist.net/")
@@ -33,21 +29,32 @@ class MyAnimeList:
         self.driver.get(link)
         sleep(1)
         self.anime_name = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[3]/div[2]/div[2]/div[1]/div/article[1]/div[1]/div[2]/a[1]').text
+        
         self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[3]/div[2]/div[2]/div[1]/div/article[1]/div[1]/div[2]/a[1]')\
             .click()
+        Total_episodes = self.driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[3]/div[2]/table/tbody/tr/td[1]/div/div[10]').text
+        episodes = int(''.join(filter(str.isdigit, Total_episodes)))
         self.anime_link = self.driver.current_url
         print(self.anime_link)
-        return self.ret_text()
+        print(episodes)
+        return [self.ret_text(), episodes]
     
     def redirect(self):     
-        main_text = self.anime_name.split('\n')[0]
-        main_text = trans_text(main_text)
-        self.driver.switch_to_window(self.driver.window_handles[1])
-        link2 = f'https://www19.gogoanime.io/{main_text}-episode-1'
-        self.driver.get(link2)
-        sleep(5)
-        return (self.anime_name)
+        main_text = self.anime_name
+        link = 'https://www19.gogoanime.io/'
+        self.driver.get(link)
+        sleep(2)
+        self.driver.find_element_by_xpath('/html/body/div[2]/div/div/header/section/div[4]/div[1]/form/div[1]/input[1]')\
+            .send_keys(main_text)
+        self.driver.find_element_by_xpath('/html/body/div[2]/div/div/header/section/div[4]/div[1]/form/div[1]/input[2]').click()
         
+        self.driver.find_element_by_xpath('/html/body/div[2]/div/div/section/section[1]/div/div[2]/ul/li[1]/div/a/img').click()
+        to_edit = self.driver.current_url
+        ep_link = to_edit.replace('/category/', '/')
+        self.driver.get(ep_link + '-episode-1')
+        return (self.anime_name)
 
-    
-    
+        
+m= MyAnimeList()
+m.Search('saiki kusuo')
+m.redirect()
