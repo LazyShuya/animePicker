@@ -59,3 +59,17 @@ class MyAnimeList:
     def continue_where_left(self, link_ref):
         self.driver.switch_to_window(self.driver.window_handles[1])
         self.driver.get(link_ref)
+
+    def current_episode(self):
+        self.driver.switch_to_window(self.driver.window_handles[1])
+        episode = self.driver.find_element_by_class_name('default_ep').get_attribute('value')
+        return int(episode)
+
+
+    def exit_program(self):
+        ep = self.current_episode()
+        self.driver.quit()
+        return ep
+
+    def simple_exit(self):
+        self.driver.quit()

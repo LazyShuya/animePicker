@@ -83,7 +83,7 @@ def random_function():
     while True:
         for prev_choices in list_for_cache:
             if prev_choices in list(df.anime_recs):
-                df = df.drop(df[df.anime_recs==prev])
+                df = df.drop(df[df.anime_recs==prev_choices])
         anime_list = list(df.anime_recs)
         anime_to_display = random.sample(anime_list, 10)
         choice = picker(anime_to_display)
@@ -91,5 +91,20 @@ def random_function():
             return choice
         else:
             list_for_cache.append(anime_to_display)
+
+def update_episode_last(episode):
+    df = pd.read_csv('watchedA.csv')
+    df.iloc[-1, df.columns.get_loc('watched_eps')] = episode
+    df.to_csv('watchedA.csv',sep=',',encoding='utf-8', index=False)
+
+def check_completion(ep):
+    df = pd.read_csv('watchedA.csv')
+    if df.iloc[-1].total_eps == df.iloc[-1].watched_eps or ep:
+        if ep != 0:
+            df.iloc[-1, df.columns.get_loc('watched_eps')] = ep
+        return True
+    else:
+        return False
+    
 
 
