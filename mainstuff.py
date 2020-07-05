@@ -25,6 +25,7 @@ class MyAnimeList:
 
 
     def Search(self, keyword):
+        self.driver.switch_to_window(self.driver.window_handles[0])
         link = "https://myanimelist.net/search/all?q="+ keyword
         self.driver.get(link)
         sleep(1)

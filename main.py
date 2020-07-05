@@ -46,7 +46,11 @@ def main():
             continue_leftoff()
             break
         elif x == '2' :
-            Get_NewAnime()
+            if check_completion(0) == True:
+                Get_NewAnime()
+            else:
+                print('complete your previous anime!')
+                continue_leftoff()
             break
         elif x=='3':
             print("Sayonara...")
@@ -68,7 +72,9 @@ def main():
             print('did you complete your previous anime?')
             print('if not, I will find you and then slap you!')
             print('')
+            sleep(2)
             ep = page.current_episode()
+            update_episode(ep)
             if check_completion(ep) != True:
                 print('complete what you were watching first and then come here!')
                 

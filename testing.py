@@ -1,3 +1,5 @@
+#this is a temp, use main
+
 from recs_database import add_recs, update, random_function, update_episode_last,check_completion
 import scraper
 from watching import new_watching, update_episode, coninue_left 
@@ -69,6 +71,7 @@ def main():
             print('if not, I will find you and then slap you!')
             print('')
             ep = page.current_episode()
+            update_episode(ep)
             if check_completion(ep) != True:
                 print('complete what you were watching first and then come here!')
                 

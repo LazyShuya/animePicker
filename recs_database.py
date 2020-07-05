@@ -99,12 +99,15 @@ def update_episode_last(episode):
 
 def check_completion(ep):
     df = pd.read_csv('watchedA.csv')
-    if df.iloc[-1].total_eps == df.iloc[-1].watched_eps or ep:
-        if ep != 0:
-            df.iloc[-1, df.columns.get_loc('watched_eps')] = ep
+    if df.iloc[-1].total_eps == ep:
+        df.iloc[-1, df.columns.get_loc('watched_eps')] = ep
+        df.to_csv('watchedA.csv')
+        return True
+    elif  df.iloc[-1].total_eps == df.iloc[-1].watched_eps:
         return True
     else:
+        df.iloc[-1, df.columns.get_loc('watched_eps')] = ep
+        df.to_csv('watchedA.csv')
+    
         return False
     
-
-
